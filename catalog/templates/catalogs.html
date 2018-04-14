@@ -1,0 +1,79 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+	<div class="row top-menu">
+		<div class="col-md-10"></div>
+		<div class="col-md-2 text-right">
+					</div>
+	</div>
+	<div class="row divider blue">
+		<div class="col-md-12">
+			<marquee onmouseover="this.stop();" onmouseout="this.start();"> 
+				<h2> Latest Added Items:
+			{% for i,j,lai,lac in last_added %}
+			<a href = "{{url_for('editCategoryItem', category_name = j,item_name= i)}}">	
+				{{ i}}
+			</a>	
+			<a href = "{{url_for('showCategory', category_name = j )}}">	
+				(
+			{{ j }}
+			)
+			</a>
+			|
+			{% endfor %}	
+			</h2>
+		</marquee>
+		</div>
+	</div>
+	<div class="row banner main">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+			<h1>Categories
+			<a href="{{url_for('newCategory')}}">
+				<button class="btn btn-default" id="new-restaurant">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Category
+				</button>			
+			</a>
+			</h1>
+		</div>
+	</div>
+	<div class="row banner main">
+		
+	
+	</div>	
+
+<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+	
+	{% for category in categories %}
+
+		<a href = "{{url_for('showCategory', category_name = category.name)}}">
+			<div class="row">
+				<div class="col-md-1"></div>
+					<div class="col-md-10 restaurant-list">
+						<h3>{{category.name}}
+						<a href="{{url_for('newCategoryItem',category_id = category.id)}}">
+							<button class="btn btn-default" id="new-restaurant">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Item
+				</button>
+			</a>
+			</h3>
+					</div>
+				<div class="col-md-1"></div>
+			</div>
+		</a>
+
+
+	{% endfor %}
+{% endblock %}
